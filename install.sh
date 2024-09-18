@@ -20,7 +20,7 @@ done
 # Add /usr/scripts to .bashrc if it doesn't already exist
 if ! grep -q "$TARGET_DIR" "$BASHRC_FILE"; then
     echo "export PATH=\$PATH:$TARGET_DIR" >> "$BASHRC_FILE"
-    echo "/usr/scripts added to PATH in .bashrc"
+    echo "$TARGET_DIR added to PATH in .bashrc"
 fi
 
 # Reload .bashrc
