@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Get the directory of the install.sh script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
