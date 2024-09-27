@@ -11,7 +11,7 @@ if [ ! -d "$TARGET_DIR" ]; then
 fi
 
 # Link all .sh files from the scripts directory to /usr/scripts
-for script in "$SCRIPT_DIR"/*.sh; do
+for script in "$SCRIPT_DIR"/*.nix; do
     if [ -f "$script" ]; then
         sudo ln -sf "$script" "$TARGET_DIR/$(basename $script)"
     fi
@@ -19,10 +19,9 @@ done
 
 # Add /usr/scripts to .bashrc if it doesn't already exist
 if ! grep -q "$TARGET_DIR" "$BASHRC_FILE"; then
-    echo "export PATH=\$PATH:$TARGET_DIR" >> "$BASHRC_FILE"
-    echo "$TARGET_DIR added to PATH in .bashrc"
+    echo "export NIXSHELLS="/usr/share/nix-shells"" >> $HOME/.bashrc
+    echo "$TARGET_DIR added as '\$NIXSHELLS' in .bashrc"
 fi
 
 # Reload .bashrc
 source "$BASHRC_FILE"
-
