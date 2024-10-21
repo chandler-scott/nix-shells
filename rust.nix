@@ -14,7 +14,8 @@ pkgs.mkShell {
 
   # Environment variables
   shellHook = ''
-    echo 'Rust development environment ready!'
+     rustup default stable;
+     echo 'Rust development environment ready!'
   '';
 }
 
