@@ -15,11 +15,11 @@ pkgs.mkShell {
 
   shellHook = ''
     # Setup ESP-IDF environment
-    export IDF_PATH=$HOME/esp-idf
+    export IDF_PATH=/usr/local/esp-idf
 
     if [ ! -d "$IDF_PATH" ]; then
       echo "ESP-IDF not found, cloning..."
-      git clone --recursive https://github.com/espressif/esp-idf.git $IDF_PATH
+      sudo git clone --recursive https://github.com/espressif/esp-idf.git $IDF_PATH
       $HOME/esp-idf/install.sh
     fi
 
@@ -32,11 +32,11 @@ pkgs.mkShell {
   
     flash() {
       if [[ -z $1 && -z $PORT ]]; then
-        read -p "Would you like to set a port? (y/n): " choice
+        read -p "Would you like to change the default port `/dev/ttyUSB0`? (y/n): " choice
         if [[ $choice =~ ^[Yy]$ ]]; then
           set_port
         else
-          echo "Usage: flash [PORT]"
+          PORT="/dev/ttyUSB0"
           return 1 
         fi
       fi
@@ -66,6 +66,18 @@ pkgs.mkShell {
     export -f set_port
     export -f flash
     export -f deploy 
+    
+    # Build directories
+    export COMPONENTS_DIR="$HOME/src/esp32/components"
+    export LIB_DIR="$HOME/src/esp32/lib"
+
+    # Other useful directories
+    export ESP_HOME="$HOME/src/esp32"
+
+    cd $ESP32_HOME
+
+    # Print a nice message
+    echo "ESP32 Development Environment Ready."
   '';
 }
 
